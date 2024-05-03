@@ -46,6 +46,7 @@ export default {
     //Metodo que nos permite cambiar nuestra pantalla de carga
     toggleHome() {
       this.home = false;
+      
     },
 
   },
