@@ -57,7 +57,9 @@ onMounted(async () => {
      * !Tipos
      */
     tipo1.value = response.data.types[0].type.name
-    tipo2.value = response.data.types[1].type.name
+    tipo2.value = response.data.types[1] ? response.data.types[1].type.name : null;
+    // tipo2.value=response.data.types[1].type.name!==null?tipo1:''
+
   } catch (error) {
     console.error('Error al obtener detalles del Pokémon:', error);
     // Aquí podrías mostrar un mensaje de error al usuario
@@ -66,7 +68,29 @@ onMounted(async () => {
 </script>
 
 <template>
-
-  {{ tipo1 }}
-  {{ tipo2  }}
+  <p>Id: {{ id }}</p>
+  <p>Nombre: {{ nombre }}</p>
+  <p>Tipos:
+    <ul>
+      <li>{{ tipo1 }}</li>
+      <li>{{ tipo2  }}</li>
+    </ul>
+  </p>
+  <p>Habilidades:
+    <ul>
+      <li>{{ habilidad1 }}</li>
+      <li>{{ habilidad2}}</li>
+    </ul>
+  </p>
+  <p>Estadisticas:
+    <ul>
+      <li> vida = {{ hp }}   </li>
+        <li>ataque = {{ ataque }} </li>
+        <li>defensa = {{ defensa }}</li>
+        <li>ataque especial = {{ ataqueSp }}</li>
+        <li>defensa especial = {{ defensaSp }}</li>
+        <li>velocidad = {{ velocidad }}</li>
+   
+    </ul>
+  </p>
 </template>

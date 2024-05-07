@@ -1,37 +1,32 @@
-
+Eran, [07/05/2024 12:14 p. m.]
 <template>
-  <div class="contenedor">
-    <LoadingScreen :loading="loading" v-if="loading" />
+  <div class = "contenedor">
+    <LoadingScreen :loading=loading v-if="loading" />
     <v-container>
-      <!-- Componente de búsqueda -->
-      <browser @buscar-pokemon="busqueda = $event" class="browser"/>
-
-
       <v-row>
         <v-col
-          v-for="pokemon in filteredPokemons"
+          v-for="pokemon in pokemons"
           :key="pokemon.nombre"
           cols="12"
           sm="6"
           md="4"
         >
-          <!-- Contenido del Pokémon -->
           <v-card outlined>
             <v-carousel :continuous="false"
-                        :show-arrows="true"
-                        delimiter-icon="mdi-square"
-                        height="500"
-                        hide-delimiter-background
-                        class='cartsBackground'>
+      :show-arrows="true"
+      delimiter-icon="mdi-square"
+      height="300"
+      hide-delimiter-background
+      class='cartsBackground'>
               <v-carousel-item
                 v-for="(imagen, index) in [pokemon.img, pokemon.imgAdicional]"
                 :key="index"
               >
-                <v-img :src="imagen" :alt="'Imagen de ' + pokemon.nombre"></v-img>
+                <v-img :src="imagen" :alt="'Imagen de ' + pokemon.nombre" ></v-img alt=imagen de ${this.pokemon.name}>
               </v-carousel-item>
             </v-carousel>
             <v-card-title class="text-h5">{{ pokemon.nombre}}</v-card-title>
-            <v-card-text class="textCard">
+            <v-card-text class='textCard'>
               <p>Altura: {{ pokemon.altura }}</p>
               <p>Peso: {{ pesoKilogramos(pokemon.peso) }}</p>
               <p>Habilidades:</p>
@@ -51,27 +46,27 @@
             <!-- Boton para detalles -->
             <v-dialog max-width="500">
               <template v-slot:activator="{ props: activatorProps }">
-                <v-btn
-                class="BotonTarjeta"
-                  v-bind="activatorProps"
+                <v-btn class="BotonTarjeta"
+                  v-bind="activatorProps" 
                   color="surface-variant"
                   text="Detalles"
                   variant="flat"
                   @click="enviarId(pokemon.id)"
+                  
                 ></v-btn>
               </template>
 
               <template v-slot:default="{ isActive }">
-                <v-card title="Detalles">
+                <v-card title="Dialog">
                   <v-card-text>
-                    <BottonDialog :idPokemon="pokemon.id" />
+                    <BottonDialog :idPokemon="idPokemon" />
                   </v-card-text>
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
 
                     <v-btn
-                      text="Cerrar"
+                      text="Close Dialog"
                       @click="isActive.value = false"
                     ></v-btn>
                   </v-card-actions>
@@ -82,8 +77,7 @@
             <!-- Boton para galeria -->
             <v-dialog max-width="1000">
               <template v-slot:activator="{ props: activatorProps }">
-                <v-btn
-                class="BotonTarjeta"
+                <v-btn class="BotonTarjeta"
                   v-bind="activatorProps"
                   color="surface-variant"
                   text="Galeria"
@@ -93,17 +87,16 @@
               </template>
 
               <template v-slot:default="{ isActive }">
-                <v-card title="Galeria">
+                <v-card title="Dialog">
                   <v-card-text>
-                    <!-- Galeria -->
-                    <galeria :pokemonid = "pokemon.id"/> 
+                    <galeria />
                   </v-card-text>
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
 
                     <v-btn
-                      text="Cerrar"
+                      text="Close Dialog"
                       @click="isActive.value = false"
                     ></v-btn>
                   </v-card-actions>
@@ -122,48 +115,27 @@ import { API_URL, POKEMON_ENDPOINT } from './components/rutas';
 import BottonDialog from './dialogCarts.vue';
 import galeria from './galeria';
 import LoadingScreen from './LoadingScreen.vue';
-import { LIMITS } from './components/values.js';
-import browser from './browser.vue';
-
 export default {
   components: {
     BottonDialog,
     galeria,
     LoadingScreen,
-    browser,
   },
   data() {
     return {
       pokemons: [],
-      pokemonsAPI: [`${API_URL}${POKEMON_ENDPOINT}?limit=${LIMITS}`],
+      pokemonsAPI: [${API_URL}${POKEMON_ENDPOINT}?limit=100],
+      dialogue: false,
+      idPokemon: '',
       loading: false,
-      busqueda: '',
-      buscarStatus: true, // Agregar la propiedad para almacenar el término de búsqueda
     };
   },
   mounted() {
     this.fetchPokemonData();
   },
-  computed: {
-    filteredPokemons() {
-      // Filtrar los Pokémon según el término de búsqueda
-      const filterName = this.busqueda ? this.busqueda.toLowerCase().trim() : '';
-      if (!filterName) {
-        // Si no hay término de búsqueda, devolver todos los Pokémon
-        return this.pokemons;
-      } else {
-        // Filtrar los Pokémon cuyo nombre o ID coincida con el término de búsqueda
-        return this.pokemons.filter(
-          (pokemon) =>
-            pokemon.nombre.toLowerCase().includes(filterName) ||
-            pokemon.id.toString().includes(filterName)
-        );
-      }
-    },
-  },
   methods: {
     async fetchPokemonData() {
-      this.loading = true;
+      this.loading = true; // Mostrar pantalla de carga
       try {
         const pokemonData = await Promise.all(
           this.pokemonsAPI.map((url) =>
@@ -192,10 +164,11 @@ export default {
           id: pokemon.id,
         }));
 
-        this.loading = false;
+        this.loading = false; // Ocultar pantalla de carga
       } catch (error) {
         console.error('Error al obtener datos de los Pokémon:', error);
-        this.loading = false;
+        // Aquí podrías mostrar un mensaje de error al usuario
+        this.loading = false; // Asegúrate de ocultar la pantalla de carga en caso de error
       }
     },
     pesoKilogramos(peso) {
@@ -204,11 +177,6 @@ export default {
     enviarId(param) {
       this.idPokemon = { id: param };
     },
-    busquedaPokemon(busqueda) {
-  this.busqueda = busqueda;
-  // Si no hay Pokémon filtrados, establecer buscarStatus en false
-  this.buscarStatus = this.filteredPokemons.length > 0 ? true : false;
-},
   },
 };
 </script>
@@ -222,7 +190,7 @@ export default {
   text-transform: uppercase;
   font-weight: bold;
   text-align: center;
-  background-image: url('./assets/image.jpg');
+  background-image: url('./assets/text-h5cats.jpeg');
   background-color: #03a9f4;
   color: #C62828;
   background-position: center center; /* Centra horizontal y verticalmente */
@@ -244,7 +212,7 @@ export default {
 
 
 .cartsBackground{
-    background-image:url('./assets/backgroundCarrusel.jpg');
+    background-image:url('./assets/image.png');
     background-position: center center; /* Centra horizontal y verticalmente */
     background-size: cover; /* Ajusta el tamaño de la imagen de fondo */
 }
