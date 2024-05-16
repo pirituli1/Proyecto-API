@@ -1,6 +1,8 @@
 <template>
-  {{  pokemonid }}
-  <div class="pokemon-carousel">
+  <div v-if="pokemons.length === 0">
+    <v-progress-circular indeterminate color="error"  :size="77" :width="12"></v-progress-circular>
+  </div>
+  <div v-else class="pokemon-carousel">
     <v-container fluid class="custom-container" >
       <v-carousel class="custom-carousel" hide-delimiters>
         <v-carousel-item v-for="(pokemon, index) in pokemons" :key="index" >
@@ -17,45 +19,45 @@
 import axios from 'axios';
 import { API_URL, POKEMON_ENDPOINT } from './components/rutas';
 
+
 export default {
+  components:{
+  },
   name: 'galeria',
-  data(){
-    return{
-      URL : `${API_URL}${POKEMON_ENDPOINT}${this.pokemonid}`,
+  data() {
+    return {
       pokemons: [],
     }
   },
-    props:{
-      pokemonid: {
-        type:Number,
-        require:true,
+  props: {
+    pokemonid: {
+      type: Number,
+      required: true,
+    }
+  },
+  methods: {
+    async obtenerSprites() {
+      try {
+        const response = await axios.get(`${API_URL}${POKEMON_ENDPOINT}${this.pokemonid}`);
+        const pokemon = response.data;
+        this.pokemons.push(pokemon.sprites.front_default);
+        this.pokemons.push(pokemon.sprites.other.home.front_default);
+        this.pokemons.push(pokemon.sprites.back_shiny);
+        this.pokemons.push(pokemon.sprites.front_shiny);
+        this.pokemons.push(pokemon.sprites.other.home.front_shiny);
+        this.pokemons.push(pokemon.sprites.other.home.front_default);
+        this.pokemons.push(pokemon.sprites.other.showdown.back_female);
+        this.pokemons.push(pokemon.sprites.versions['generation-iii'].emerald.front_default);
+        this.pokemons.push(pokemon.sprites.versions['generation-iii'].emerald.front_shiny);
+      } catch (error) {
+        console.error('Error al obtener los sprites:', error);
       }
     },
-    methods:{
-      async obtenerSprites() {
-      await axios.get(this.url)
-        .then(response => {
-          const pokemon = response.data;
-          this.pokemons.push(pokemon.sprites.front_default);
-          this.pokemons.push(pokemon.sprites.other.home.front_default)
-          this.pokemons.push(pokemon.sprites.back_shiny);
-          this.pokemons.push(pokemon.sprites.front_shiny);
-          this.pokemons.push(pokemon.sprites.other.home.front_shiny);
-          this.pokemons.push(pokemon.sprites.other.home.front_default);
-          this.pokemons.push(pokemon.sprites.other.showdown.back_female);
-          this.pokemons.push(pokemon.sprites.versions['generation-iii'].emerald.front_default);
-          this.pokemons.push(pokemon.sprites.versions['generation-iii'].emerald.front_shiny);
-        }).then(console.log('Solucitud exitosa'))
-        .catch(error => {
-          console.error('Error al obtener los sprites:', error);
-        });
-    },
-
-    async mounted(){
-      await this.obtenerSprites();
-    }
+  },
+  mounted() {
+    this.obtenerSprites();
+  }
 }
-};
 </script>
 
 <style scoped>
@@ -69,7 +71,7 @@ export default {
   /* Estilos personalizados para el contenedor */
   max-width: 10000px;
   margin: 0 auto; /* Centrar el contenedor */
-  background-image: url('./assets/backgroundCarrusel.jpg');
+  background-image: url('./assets/pokemoncarts1.jpg');
   background-color: #cccc;
   padding: 2px;
   border-radius: 50px;
@@ -94,6 +96,5 @@ export default {
 .imagen-personalizada {
   width: 100%;
   height: auto
-  
   }
 </style>
