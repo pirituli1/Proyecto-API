@@ -1,5 +1,10 @@
 <template>
-  <div class = "contenedor">
+  <img src="/home/erandyluna/from/ApiPokemon/src/assets/pikachuIcon.ico" alt="Pokémon" class ="img1"> 
+  <!-- img pokemon  -->
+  <img src="/home/erandyluna/from/ApiPokemon/src/assets/pikachuIcon.ico" alt="Pokémon" class ="img2">
+    <h1 class="titulo">pokemon</h1>
+
+  <div class ="contenedor">
     <LoadingScreen :loading=loading v-if="loading" />
     <v-container>
       <v-row>
@@ -15,16 +20,18 @@
       :show-arrows="true"
       delimiter-icon="mdi-square"
       height="300"
-      hide-delimiter-background>
+      hide-delimiter-background
+      class='cartsBackground'>
               <v-carousel-item
                 v-for="(imagen, index) in [pokemon.img, pokemon.imgAdicional]"
                 :key="index"
               >
-                <v-img :src="imagen" :alt="'Imagen de ' + pokemon.nombre"></v-img alt=`imagen de ${this.pokemon.name}`>
+                <v-img :src="imagen" :alt="'Imagen de ' + pokemon.nombre" ></v-img alt=`imagen de ${this.pokemon.name}`>
               </v-carousel-item>
             </v-carousel>
             <v-card-title class="text-h5">{{ pokemon.nombre}}</v-card-title>
             <v-card-text>
+            <div class='textCard'>
               <p>Altura: {{ pokemon.altura }}</p>
               <p>Peso: {{ pesoKilogramos(pokemon.peso) }}</p>
               <p>Habilidades:</p>
@@ -39,22 +46,24 @@
                   Numero de pokemon: {{ pokemon.id }}
                 </li>
               </ul>
+            </div>
             </v-card-text>
 
             <!-- Boton para detalles -->
-            <v-dialog max-width="500">
+            <v-dialog max-width="800">
               <template v-slot:activator="{ props: activatorProps }">
-                <v-btn
-                  v-bind="activatorProps"
+                <v-btn class="BotonTarjeta"
+                  v-bind="activatorProps" 
                   color="surface-variant"
                   text="Detalles"
                   variant="flat"
                   @click="enviarId(pokemon.id)"
+                  
                 ></v-btn>
               </template>
 
               <template v-slot:default="{ isActive }">
-                <v-card title="Dialog">
+                <v-card title="">
                   <v-card-text>
                     <BottonDialog :idPokemon="idPokemon" />
                   </v-card-text>
@@ -72,19 +81,20 @@
             </v-dialog>
 
             <!-- Boton para galeria -->
-            <v-dialog max-width="500">
+            <v-dialog max-width="1000">
               <template v-slot:activator="{ props: activatorProps }">
-                <v-btn
+                <v-btn class="BotonTarjeta"
                   v-bind="activatorProps"
-                  color="surface-variant"
+                  color="#5DADE2 "
                   text="Galeria"
+                  append-icon="$iconsGaleria.ico"
                   variant="flat"
                   @click="enviarId(pokemon.id)"
                 ></v-btn>
               </template>
 
               <template v-slot:default="{ isActive }">
-                <v-card title="Dialog">
+                <v-card title="">
                   <v-card-text>
                     <galeria />
                   </v-card-text>
@@ -180,10 +190,75 @@ export default {
 </script>
 
 <style>
-.contenedor{
-  background-color: black;
+.img2{
+    float: right; /* Posiciona la imagen a la derecha */
+    /* Opcional: ajusta el tamaño de la imagen */
+    height: auto; /* Mantener la proporción de aspecto */
 }
-.text-h5{
+
+.contenedor{
+  background-image: url('./assets/fondoPokemon2.jpeg');
+  background-size: cover; /* Ajusta el tamaño de la imagen de fondo */
+}
+
+.text-h5 {
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  background-image: url('./assets/cintaCarts.jpg');
+  background-color: #03a9f4;
+  color: #C62828;
+  background-position: center center; /* Centra horizontal y verticalmente */
+  background-size: cover; /* Ajusta el tamaño de la imagen de fondo */
+}
+
+.BotonTarjeta {
+  background-color: #74992e;
+  color: #85C1E9;
+  border-style: center;
+  padding: 1px 15px; /* Aumentamos el relleno para mayor separación */
+  border-width: 2px; /* Ajustamos el tamaño del borde */
+  align-items: center;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-bottom: 5%;
+   margin-left:120px;
+}
+
+
+.cartsBackground{
+    background-image:url('./assets/image.png');
+    background-position: center center; /* Centra horizontal y verticalmente */
+    background-size: cover; /* Ajusta el tamaño de la imagen de fondo */
+}
+
+.textCard {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2E4053;
+  text-align:start;
+  font-family: 'Press Start 2P', cursive;
+  margin-left:140px;
+   border-width: 15px;
+
+}
+ul {
+  list-style-type: none; /* Quitamos la viñeta predeterminada */
+}
+
+li {
+  padding-left: 20px; /* Agregamos espacio para la imagen de viñeta */
+  background-repeat: no-repeat; /* Evitamos que la imagen de viñeta se repita */
+  background-position: 0 50%; /* Alineamos la imagen de viñeta */
+}
+.titulo{
+  color: #F1C40F;
+  font-weight: bold;
+  text-align: center;
+  font-size: 50px;
+  letter-spacing: 2px;
+  padding: 2px;
+  text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em #4DD0E1;
   text-transform: uppercase;
 }
 </style>
