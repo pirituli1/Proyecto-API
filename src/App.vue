@@ -1,8 +1,16 @@
 <template>
-  <div id="app">
+  <div>
+    <RouterLink to="/"> HOME </RouterLink>
+    <RouterLink to="/carts"> Carts </RouterLink>
+    <RouterLink to="/table"> Table </RouterLink>
+  </div>
+    
+<RouterView></RouterView>
+  <!-- <div id="app">
     <div v-if="home">
       
       <Home @toggle-home="toggleHome" />
+      <RouterLink to="/carts">Ir a las tarjetas</RouterLink>
 
     </div>
 
@@ -18,7 +26,7 @@
 
       </div>
     </div>
-  </div>
+  </div> -->
 
   
 </template>

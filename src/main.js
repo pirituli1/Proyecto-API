@@ -6,14 +6,14 @@
 
 // Plugins
 import { registerPlugins } from '@/plugins'
-import router from './router/router';
-// Components
-import App from './App.vue'
-
-// Composables
 import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router/router' 
 
 const app = createApp(App)
+
+// Usa el router en la aplicación
+app.use(router)
 
 registerPlugins(app)
 

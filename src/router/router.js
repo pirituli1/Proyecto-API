@@ -1,15 +1,20 @@
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '../home.vue';
+import Carts from '../Carts.vue';
+import Table from '../table';
 
-import table from '../table.vue'
 
 const routes = [
-  { path: '/', component: table },
-//   { path: '/about', component: AboutView },
+  { path: '/',name:'home',component: Home },
+  { path: '/carts',name:'carts',component: Carts },
+  { path: '/table',name:'table',component: Table },
+  
+
 ]
 
 const router = createRouter({
-  history: createMemoryHistory(),
-  routes,
+  history: createWebHistory(),
+  routes
 })
 
-export default router;
+export default router

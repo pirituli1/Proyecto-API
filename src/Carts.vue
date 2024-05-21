@@ -171,11 +171,11 @@ export default {
       /**
        * @param {boolean} loading Se encargará de determinar si está cargando algo.
        */
-      loading: false,
+      loading: true,
       /**
        * @param {int} limit Encargado de determinar el límite de nuestras obtenciones número máximo: 1015
        */
-      limit: 1025,
+      limit: 151,
       /**
        * @param {int} offset Encargado de determinar el número de pokemon por el que empezaremos. Numero mínimo: 0
        */
@@ -195,9 +195,11 @@ export default {
 
   mounted() {
     this.main();
+    this.loading = true;
   },
 
   methods: {
+    
     /**
      * Función main de nuestro script. Se ejecuta y se llamará al inicio de nuestra página.
      */
@@ -206,6 +208,8 @@ export default {
       this.setURL();
       await this.getPokemonData(this.URL);
       await this.setPokemonData();
+      // await this.totalPaginas();
+      this.loading = false;
     },
 
     /**
@@ -213,7 +217,7 @@ export default {
      */
     async getNames() {
       try {
-        this.loading = true;
+        // this.loading = true;
         let url = `${API_URL}${POKEMON_ENDPOINT}?limit=1302`;
         const response = await axios.get(url);
         const pokemonData = response.data.results;
@@ -225,7 +229,7 @@ export default {
       } catch (error) {
         console.log(error);
       } finally {
-        this.loading = false;
+        
       }
     },
 
@@ -262,7 +266,7 @@ export default {
     async setPokemonData() {
       try {
         // this.pokemons = [];
-        this.loading = true;
+        // this.loading = true;
         for (const pokemonInfo of this.pokemonData) {
           const url = pokemonInfo.url;
           const response = await axios.get(url);
@@ -284,7 +288,7 @@ export default {
           };
 
           this.pokemons.push(pokemon);
-          this.loading = false;
+          // this.loading = false;
         }
       } catch (error) {
         console.error("Error al obtener datos del Pokémon:", error);
@@ -297,7 +301,7 @@ export default {
       console.log("Valor recibido:", pokemonBuscado);
 
       try {
-        this.loading = true;
+        // this.loading = true;
         // Validar si pokemonBuscado es un número
         let validacionNumero = parseInt(pokemonBuscado);
         if (!isNaN(validacionNumero)) {
@@ -356,7 +360,7 @@ export default {
               };
               // Agregar el Pokémon al arreglo this.pokemons
               this.pokemons.push(pokemonData);
-              this.loading = false;
+              // this.loading = false;
             }
           } else {
             console.log("Error: no se encontraron coincidencias");
@@ -381,6 +385,7 @@ export default {
       // Actualizamos la lista de pokemons paginados con los pokemons de la página actual
       this.pokemonsPaginados = this.pokemons.slice(inicio, fin);
     },
+
   },
   computed: {
     totalPaginas() {

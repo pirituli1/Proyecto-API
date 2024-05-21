@@ -9,6 +9,7 @@
       <v-list-item><a href="https://github.com/pirituli1">>>Bautista Velasco Carlos<<</a></v-list-item>
     </v-list>
     <v-btn @click="toggleHome">Iniciar</v-btn>
+    
   </section>
 </template>
 
