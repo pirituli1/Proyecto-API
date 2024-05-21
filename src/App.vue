@@ -6,11 +6,10 @@
     <v-btn @click="navigateToTable">TABLE</v-btn>
     <img src="./assets/pikachuIcon.ico" alt="Pokémon" class="img2" />
   </div>
-
   <RouterView></RouterView>
 
   <div class="Footer">
-
+    <!-- Informacion sobre pokemon, basate otras paginas de pokemon -->
   </div>
 </template>
 
