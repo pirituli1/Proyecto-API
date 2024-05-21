@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { getAllPokemonData } from './apis/apiPokemon';
+import { getAllPokemonData } from '../../apis/apiPokemon';
 
 
 </script>

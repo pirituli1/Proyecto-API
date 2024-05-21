@@ -1,6 +1,4 @@
 <template>
-  <img src="./assets/pikachuIcon.ico" alt="Pokémon" class="img1" />
-  <img src="./assets/pikachuIcon.ico" alt="Pokémon" class="img2" />
   <div class="contenedor">
     <LoadingScreen :loading="loading" v-if="loading" />
     <v-container>

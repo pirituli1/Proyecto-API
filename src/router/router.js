@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../home.vue';
 import Carts from '../Carts.vue';
-import Table from '../table';
+import Table from '../components/table.vue/table.vue';
 
 
 const routes = [
