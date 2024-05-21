@@ -1,34 +1,12 @@
 <template>
   <div>
-    <RouterLink to="/"> HOME </RouterLink>
-    <RouterLink to="/carts"> Carts </RouterLink>
-    <RouterLink to="/table"> Table </RouterLink>
+    <v-btn @click="navigateToHome">HOME</v-btn>
+    <v-btn @click="navigateToCarts">CARTS</v-btn>
+    <v-btn @click="navigateToTable">TABLE</v-btn>
   </div>
     
 <RouterView></RouterView>
-  <!-- <div id="app">
-    <div v-if="home">
-      
-      <Home @toggle-home="toggleHome" />
-      <RouterLink to="/carts">Ir a las tarjetas</RouterLink>
 
-    </div>
-
-    <div v-else>
-      <div v-if="loading">
-
-        <LoadingScreen :loading="loading"/>
-
-      </div>
-      <div v-else>
-
-        <carts></carts>
-
-      </div>
-    </div>
-  </div> -->
-
-  
 </template>
 
 <script>
@@ -58,7 +36,16 @@ export default {
     //Metodo que nos permite cambiar nuestra pantalla de carga
     toggleHome() {
       this.home = false;
-      
+
+    },
+    navigateToHome(){
+      this.$router.push('/')
+    },
+    navigateToCarts(){
+      this.$router.push('/carts')
+    },
+    navigateToTable(){
+      this.$router.push('/table')
     },
 
   },

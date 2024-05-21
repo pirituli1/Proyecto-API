@@ -44,6 +44,8 @@ export default {
           ataqueSp: pokemon.stats[3]?.base_stat,
           defensaSp: pokemon.stats[4]?.base_stat,
           velocidad: pokemon.stats[5]?.base_stat,
+          tipo1: pokemon.types[0]?.type?.name || 'N/A',
+          tipo2: pokemon.types[1]?.type?.name || 'N/A',
         }
       } catch (error) {
         console.log(error);
@@ -66,7 +68,8 @@ export default {
     <div class="container">
       <p class="titulos"><img class="PokebolaImagen-Container" src="./assets/pokebola.png"> Tipos:</p>
       <ul>
-        <!-- Agrega lógica para mostrar los tipos si es necesario -->
+        <li>TIPO1: {{ pokemon.tipo1 }}</li>
+        <li>TIPO2: {{ pokemon.tipo2 }}</li>
       </ul>
     </div>
     <div class="container">
