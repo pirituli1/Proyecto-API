@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_URL } from "@/components/rutas"; // Ajusta la ruta según tu estructura de archivos
+import { AsyncCompiler } from "sass";
 
 const apiPokemon = axios.create({
   baseURL: API_URL,
@@ -59,10 +60,51 @@ const getPokemonData = async (url) => {
 
 
       tipos: {
-        tipo1: pokemon.types[0].type.name,
-        tipo2: pokemon.types[0].type.name
+        tipo1:  pokemon.types[0]?.type?.name || 'N/A',
+        tipo2:  pokemon.types[1]?.type?.name || 'N/A',
 
       }
+    };
+  } catch (err) {
+    console.log(
+      `|||Se detectó un error al obtener los datos del Pokémon|| ${err}`
+    );
+    throw err;
+  }
+};
+
+
+// tipos
+export const getTypePokemon = async () =>{
+  const response = await apiPokemon.get(`pokemon?limit=1172&offset=0`)
+  const allPokemon = response.data.results;
+  const pokemonDetails = await Promise.all(
+    allPokemon.map(async (pokemon) => {
+      const details = await getPokemonType(pokemon.url);
+      return details;
+    })
+  );
+  return pokemonDetails;
+}
+
+const getPokemonType = async (url) => {
+  try {
+    const response = await axios.get(url);
+    const pokemon = response.data;
+
+    return {
+      
+      nombre: pokemon.name,
+
+      tipos: {
+        tipo1:  pokemon.types[0]?.type?.name || 'N/A',
+        tipo2:  pokemon.types[1]?.type?.name || 'N/A',
+      },
+
+      imagenes: {
+        img: pokemon.sprites.front_default,
+        imgAdicional: pokemon.sprites.front_shiny,
+      },
     };
   } catch (err) {
     console.log(

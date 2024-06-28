@@ -5,7 +5,7 @@
     <div class="loading-content">
 
       <v-progress-circular indeterminate color="error"  :size="77" :width="12"></v-progress-circular>
-      <div class="loading-text">Cargando Imagenes...</div>
+      <div class="loading-text">Cargando...</div>
 
     </div>
 

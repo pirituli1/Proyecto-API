@@ -34,6 +34,8 @@
                   <p> id: {{ pokemon.id}}</p>
                   <p> peso: {{ pokemon.peso / 10 }} kilos</p>
                   <p> altura: {{ pokemon.altura /10 }} metros  </p>
+                  <p> tipo 1: {{ pokemon.tipos.tipo1 }}</p>
+                  <p> tipo 2: {{ pokemon.tipos.tipo2 }}</p>
                 </div>
               </v-card-item>
             </v-card-text>
